@@ -5,7 +5,7 @@ from PIL import Image
 import os
 
 
-dimensions = 480, 480
+dimensions = 3600, 180
 
 
 def gen_musk(): #Generate musk image (60x60)
@@ -13,9 +13,26 @@ def gen_musk(): #Generate musk image (60x60)
     [bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg ],
     [bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, a1, bg, bg, bg, a1, bg, bg, a1, bg, bg, bg, bg, bg, bg, bg, a1, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg ],
     [bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg ],
-      1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60 
   ]
 
   return musk_image
+
+def make_image():
+  pixel_list = gen_musk() #Gets list of image pixels
+  pixel_array = np.array(pixel_list, dtype=np.uint8) #Turns list into array
+
+  new_image = Image.fromarray(pixel_array) #Turns array to image
+  image = new_image.resize(dimensions, resample=0)
+  image.show()
+
+for x in range(5):
+  
+  seed(x+21)
+
+  bg = (randint(0,256), randint(0,256), randint(0,256))
+
+  a1 = (randint(0,256), randint(0,256), randint(0,256))
+
+  make_image()
 
 

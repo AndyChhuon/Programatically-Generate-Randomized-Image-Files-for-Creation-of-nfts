@@ -3,6 +3,7 @@ from random import randint
 import numpy as np
 from PIL import Image
 import os
+import random
 
 
 
@@ -162,7 +163,7 @@ def add_eyes(eyes_type):
     
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\red_eye.png')
     foreground = foreground_image.resize(DIMENSIONS_DEMON, resample=0)
-    background.paste(foreground, (164, 286), foreground) #167,291
+    background.paste(foreground, (164, 286), foreground) 
     background.show()
 
 
@@ -170,12 +171,21 @@ def add_eyes(eyes_type):
       
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\lizard_eye.png')
     foreground = foreground_image.resize(DIMENSIONS_LIZARD, resample=0)
-    background.paste(foreground, (170, 291), foreground) #170,291
+    background.paste(foreground, (170, 291), foreground) 
     background.show()
 
   background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
 
+def gen_hair(normal_hair):
+
+  if normal_hair == 'yes':
+    b1 = (49,43,42)
+
+  else:
+    b1 = generate_pixel()
+  
+  return b1
 
 
 def generate_pixel():
@@ -186,22 +196,20 @@ def generate_pixel():
 
 
 
-
-
-
 def generate_seed():
     seed_1 = randint(0,1000)
     seed(seed_1)
 
 
 
+nb_images = 5
 
 DIMENSIONS = 600, 600
 DIMENSIONS_BIG_GLASSES = 300,300 
 DIMENSIONS_GMA_GLASSES = 200,200
 DIMENSIONS_BIG_SPOODER = 400, 400
 DIMENSIONS_GMA_SPOODER = 275, 275
-DIMENSIONS_LIZARD = 36, 36 #36,36
+DIMENSIONS_LIZARD = 36, 36 
 DIMENSIONS_DEMON = 47,47
 IMAGE_PATH = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Images"
 IMAGE_PATH_ACCESSORIES = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Accessories"
@@ -223,19 +231,41 @@ T1 = (214,214,214)
 T2 = (227,227,227)
 
 SKIN_OPTIONS = {'random_color' : 85, 'human_elon' : 15}
+NORMAL_HAIR = {'yes': 25, 'no': 75}
 GLASSES_TYPE_OPTIONS = {'' : 75, 'normal' : 10, 'spooderman' : 10, 'nerd' : 5}
 GLASSES_SIZE_OPTIONS = {'big_glasses' : 80, 'grandma_glasses' : 20}
 EYES_OPTIONS = {'' : 92, 'demon' : 5, 'lizard' : 3}
+JOINT = {'yes': 10, 'no': 90}
 
 
-for x in range(15):
+
+#pick attributes
+
+list_skin_options = random.choices(list(SKIN_OPTIONS.keys()), weights = SKIN_OPTIONS.values(), k = nb_images) #**verify tha glasses_size is not included in map if glasses type is ''
+list_normal_hair = random.choices(list(NORMAL_HAIR.keys()), weights = NORMAL_HAIR.values(), k = nb_images)
+list_glasses_type = random.choices(list(GLASSES_TYPE_OPTIONS.keys()), weights = GLASSES_TYPE_OPTIONS.values(), k = nb_images)
+list_glasses_size = random.choices(list(GLASSES_SIZE_OPTIONS.keys()), weights = GLASSES_SIZE_OPTIONS.values(), k = nb_images)
+list_eyes_options = random.choices(list(EYES_OPTIONS.keys()), weights = EYES_OPTIONS.values(), k = nb_images)
+list_joint_option = random.choices(list(JOINT.keys()), weights = JOINT.values(), k = nb_images)
+
+print(list_skin_options)
+print (list_normal_hair)
+print(list_glasses_type)
+print(list_glasses_size)
+print(list_eyes_options)
+print(list_joint_option)
+
+
+
+for x in range(nb_images):
   
-  SKIN_OPTIONS = 'random_color' #TO CHANGE**
+  
 
-  if SKIN_OPTIONS == 'human_elon':   #Assign RGB value to groups of pixels
+  #Assign RGB value to groups of pixels
+
+  if list_skin_options[x] == 'human_elon':   
     seed(x+21)
     bg = generate_pixel()
-    b1 = (49,43,42)
     b2= (154,136,131)
     b3= (165,145,140)
     b4= (212,181,172)
@@ -248,11 +278,15 @@ for x in range(15):
     n5= (255,222,214)
     n6= (255,222,214)
 
+    #add hair rgb value
+    b1= gen_hair(list_normal_hair[x])
+
+
+
   
-  elif SKIN_OPTIONS == 'random_color':
+  elif list_skin_options[x] == 'random_color':
     seed(x+21)
     bg = generate_pixel()
-    b1 = generate_pixel()
     b2= generate_pixel()
     b3= generate_pixel()
     b4= generate_pixel()
@@ -265,17 +299,16 @@ for x in range(15):
     n5= generate_pixel()
     n6= generate_pixel()
 
-  #Generate basic image with random colors
+    b1= gen_hair(list_normal_hair[x])
+
+
+  #Generate basic image with colors
   make_image()
+
+  if list_eyes_options[x] != '':
+    add_eyes(list_eyes_options[x])
   
-  add_eyes('demon') #do if bla bla **
-  
-  add_glasses('nerd', 'big_glasses') # do if bla bla **
-
-  
+  if list_glasses_type != '':
+    add_glasses(list_glasses_type[x], list_glasses_size[x])
 
 
-
-
-
-  

@@ -81,21 +81,67 @@ def gen_musk(): #Generate musk image (60x60)
 
 
 def make_image(): #Makes basic elon image
-  pixel_list = gen_musk() #Gets list of image pixels
-  pixel_array = np.array(pixel_list, dtype=np.uint8) #Turns list into array
+  pixel_list = gen_musk() 
+  pixel_array = np.array(pixel_list, dtype=np.uint8) 
 
-  new_image = Image.fromarray(pixel_array) #Turns array to image
+  new_image = Image.fromarray(pixel_array) 
   image = new_image.resize(dimensions, resample=0)
   image.save(image_path + '\musk_' + str(x) + '.png')
 
-def print_glasses():
-  foreground_image = Image.open(image_path_accessories + r'\glasses.png')
-  foreground = foreground_image.resize(dimensions_image, resample=0)
+def add_glasses(glasses_type, glasses_size): 
+  
   background = Image.open(image_path + '\musk_' + str(x) + '.png')
 
+  if glasses_type == 'normal':
 
-  background.paste(foreground, (110, 290), foreground)
-  background.show()
+    foreground_image = Image.open(image_path_accessories + r'\glasses.png')
+
+    if glasses_size == 'big_glasses':
+
+      foreground = foreground_image.resize(dimensions_big_glasses, resample=0)
+      background.paste(foreground, (110, 290), foreground)
+      background.show()
+
+    elif glasses_size == 'grandma_glasses':
+
+      foreground = foreground_image.resize(dimensions_gma_glasses, resample=0)
+      background = Image.open(image_path + '\musk_' + str(x) + '.png')
+      background.paste(foreground, (160, 290), foreground)
+      background.show()
+  
+  elif glasses_type == 'spooderman':
+    foreground_image = Image.open(image_path_accessories + r'\glasses_color.png')
+    
+    if glasses_size == 'big_glasses':
+
+      foreground = foreground_image.resize(dimensions_big_spooder, resample=0)
+      background.paste(foreground, (100, 290), foreground)
+      background.show()
+
+    elif glasses_size == 'grandma_glasses':
+
+      foreground = foreground_image.resize(dimensions_gma_spooder, resample=0)
+      background = Image.open(image_path + '\musk_' + str(x) + '.png')
+      background.paste(foreground, (150, 290), foreground)
+      background.show()
+
+  elif glasses_type == 'nerd':
+    foreground_image = Image.open(image_path_accessories + r'\nerd_glasses.png')
+    
+    if glasses_size == 'big_glasses':
+
+      foreground = foreground_image.resize(dimensions_big_glasses, resample=0)
+      background.paste(foreground, (110, 265), foreground)
+      background.show()
+
+    elif glasses_size == 'grandma_glasses':
+
+      foreground = foreground_image.resize(dimensions_gma_glasses, resample=0)
+      background = Image.open(image_path + '\musk_' + str(x) + '.png')
+      background.paste(foreground, (160, 318), foreground)
+      background.show()
+  
+  background.save(image_path + '\musk_' + str(x) + '.png')
 
 
 
@@ -105,7 +151,10 @@ def generate_seed():
     seed(seed_1)
 
 dimensions = 600, 600
-dimensions_image = 300,300 #200 gma glasses
+dimensions_big_glasses = 300,300 
+dimensions_gma_glasses = 200,200
+dimensions_big_spooder = 400, 400
+dimensions_gma_spooder = 275,275
 image_path = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Images"
 image_path_accessories = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Accessories"
 
@@ -155,7 +204,9 @@ for x in range(1):
   generate_seed()
 
   make_image()
-  print_glasses()
+  
+  print()
+  add_glasses('nerd', 'grandma_glasses')
 
 
 

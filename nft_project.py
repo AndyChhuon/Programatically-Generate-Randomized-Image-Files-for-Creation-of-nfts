@@ -5,7 +5,6 @@ from PIL import Image
 import os
 
 
-dimensions = 600, 600
 
 
 def gen_musk(): #Generate musk image (60x60)
@@ -81,18 +80,34 @@ def gen_musk(): #Generate musk image (60x60)
   return musk_image
 
 
-def make_image():
+def make_image(): #Makes basic elon image
   pixel_list = gen_musk() #Gets list of image pixels
   pixel_array = np.array(pixel_list, dtype=np.uint8) #Turns list into array
 
   new_image = Image.fromarray(pixel_array) #Turns array to image
   image = new_image.resize(dimensions, resample=0)
-  image.show()
+  image.save(image_path + '\musk_' + str(x) + '.png')
+
+def print_glasses():
+  foreground_image = Image.open(image_path_accessories + r'\glasses.png')
+  foreground = foreground_image.resize(dimensions_image, resample=0)
+  background = Image.open(image_path + '\musk_' + str(x) + '.png')
+
+
+  background.paste(foreground, (110, 290), foreground)
+  background.show()
+
+
+
 
 def generate_seed():
     seed_1 = randint(0,1000)
     seed(seed_1)
 
+dimensions = 600, 600
+dimensions_image = 300,300 #200 gma glasses
+image_path = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Images"
+image_path_accessories = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Accessories"
 
 
 a1= (79,69,68)
@@ -111,7 +126,7 @@ t1 = (214,214,214)
 t2 = (227,227,227)
 
 
-for x in range(50):
+for x in range(1):
   
   seed(x+21)
   bg = (randint(0,256), randint(0,256), randint(0,256))
@@ -139,10 +154,11 @@ for x in range(50):
   n6= (randint(0,256), randint(0,256), randint(0,256))
   generate_seed()
 
-
-
-
-
   make_image()
+  print_glasses()
+
+
+
+
 
   

@@ -8,13 +8,15 @@ import random
 
 
 
-def gen_musk(): #Generate musk image (60x60) - note: could have used .convert('RGB')  .getdata() and make algorithm to replace a certain rgb value, shown beloc. Opted for matrix to have more customization freedom. (gotten by printing rgb values)
+def gen_musk(): #Generate musk image (60x60) - note: could have used .convert('RGB')  .getdata() and make algorithm to replace a certain rgb value, shown below. Opted for matrix to have more customization freedom. (gotten by printing rgb values)
 
-                #(ex:for item in datas:
+                #ex:
+                #newData = []
+                #for item in datas:
                 #if item[0] == 255 and item[1] == 222 and item[2] == 214:
                 #newData.append((new_rgb))
                 #else:
-                #newData.append(item))
+                #newData.append(item)
   musk_image = [
     [bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg ],
     [bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg, bg ],

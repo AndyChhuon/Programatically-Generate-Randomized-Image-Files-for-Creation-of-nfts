@@ -303,7 +303,7 @@ BACKGROUND_OPTIONS = {'': 52, 'night': 6, 'city': 6, 'car': 6, 'cinema': 6, 'bom
 
 seed(42)
 
-list_skin_options = random.choices(list(SKIN_OPTIONS.keys()), weights = SKIN_OPTIONS.values(), k = nb_images) #**verify tha glasses_size is not included in map if glasses type is ''
+list_skin_options = random.choices(list(SKIN_OPTIONS.keys()), weights = SKIN_OPTIONS.values(), k = nb_images) 
 list_normal_hair = random.choices(list(NORMAL_HAIR.keys()), weights = NORMAL_HAIR.values(), k = nb_images)
 list_glasses_type = random.choices(list(GLASSES_TYPE_OPTIONS.keys()), weights = GLASSES_TYPE_OPTIONS.values(), k = nb_images)
 list_glasses_size = random.choices(list(GLASSES_SIZE_OPTIONS.keys()), weights = GLASSES_SIZE_OPTIONS.values(), k = nb_images)
@@ -327,6 +327,9 @@ for i in range(nb_images):
     'Forehead type': list_forehead_options[i],
     'Background type' : list_background_options[i]
   }
+  if attributes_dict['Glasses_type'] == '':
+    attributes_dict['Glasses_size'] = ''
+
   attributes_map.append(attributes_dict)
 
 print(attributes_map)

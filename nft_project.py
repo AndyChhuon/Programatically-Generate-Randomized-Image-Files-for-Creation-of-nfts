@@ -8,7 +8,7 @@ import random
 
 
 
-def gen_musk(): #Generate musk image (60x60) - note: could have used .convert('RGB')  .getdata() and make algorithm to replace a certain rgb value. Opted for matrix to have more customization freedom. (gotten by printing )
+def gen_musk(): #Generate musk image (60x60) - note: could have used .convert('RGB')  .getdata() and make algorithm to replace a certain rgb value, shown beloc. Opted for matrix to have more customization freedom. (gotten by printing rgb values)
 
                 #(ex:for item in datas:
                 #if item[0] == 255 and item[1] == 222 and item[2] == 214:
@@ -114,13 +114,13 @@ def generate_seed():
 
 
 def make_image(check_background): #Makes basic elon image
+
   pixel_list = gen_musk() 
   pixel_array = np.array(pixel_list, dtype=np.uint8) 
-
   new_image = Image.fromarray(pixel_array) 
+
   image = new_image.resize(DIMENSIONS, resample=0)
   image.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
-  image.show()
 
   if check_background != '':
     image = new_image.resize(SMALL_DIMENSIONS, resample=0)
@@ -138,22 +138,19 @@ def make_image(check_background): #Makes basic elon image
       
     
     image.putdata(new_rgba)
-    new_image = image.resize(DIMENSIONS, resample=0)
-    new_image.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
-    new_image.show()
+    image = image.resize(DIMENSIONS, resample=0)
+
+    add_background(check_background, image)
 
 
+def add_background(type_background, image):
+  foreground = image
 
+  background = Image.open(IMAGE_PATH_ACCESSORIES + r'\background_' + type_background + '.png')
+  background = background.resize(DIMENSIONS, resample=0)
+  background.paste(foreground, (0, 0), foreground)
+  background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
-'''
-def test():
-  foreground = Image.open(IMAGE_PATH + '\musk_' + str(x) + '.png')
-  background = Image.open(IMAGE_PATH + '\img1' + '.png')
-  background.paste(foreground, (0, 0), foreground) 
-  background.show()
-
-'''
-  
 
 
 
@@ -167,7 +164,6 @@ def add_eyes(eyes_type):
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\red_eye.png')
     foreground = foreground_image.resize(DIMENSIONS_DEMON, resample=0)
     background.paste(foreground, (164, 286), foreground) 
-    background.show()
 
 
   elif eyes_type == 'lizard':
@@ -175,7 +171,6 @@ def add_eyes(eyes_type):
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\lizard_eye.png')
     foreground = foreground_image.resize(DIMENSIONS_LIZARD, resample=0)
     background.paste(foreground, (170, 291), foreground) 
-    background.show()
 
   background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
@@ -196,13 +191,11 @@ def add_glasses(glasses_type, glasses_size):
 
       foreground = foreground_image.resize(DIMENSIONS_BIG_GLASSES, resample=0)
       background.paste(foreground, (110, 290), foreground)
-      background.show()
 
     elif glasses_size == 'grandma_glasses':
 
       foreground = foreground_image.resize(DIMENSIONS_GMA_GLASSES, resample=0)
       background.paste(foreground, (160, 290), foreground)
-      background.show()
   
   elif glasses_type == 'spooderman':
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\glasses_color.png')
@@ -211,13 +204,11 @@ def add_glasses(glasses_type, glasses_size):
 
       foreground = foreground_image.resize(DIMENSIONS_BIG_SPOODER, resample=0)
       background.paste(foreground, (100, 290), foreground)
-      background.show()
 
     elif glasses_size == 'grandma_glasses':
 
       foreground = foreground_image.resize(DIMENSIONS_GMA_SPOODER, resample=0)
       background.paste(foreground, (150, 290), foreground)
-      background.show()
 
   elif glasses_type == 'nerd':
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\nerd_glasses.png')
@@ -226,13 +217,11 @@ def add_glasses(glasses_type, glasses_size):
 
       foreground = foreground_image.resize(DIMENSIONS_BIG_GLASSES, resample=0)
       background.paste(foreground, (110, 265), foreground)
-      background.show()
 
     elif glasses_size == 'grandma_glasses':
 
       foreground = foreground_image.resize(DIMENSIONS_GMA_GLASSES, resample=0)
       background.paste(foreground, (160, 318), foreground)
-      background.show()
       
   background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
@@ -243,7 +232,6 @@ def add_joint():
   foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\blunt.png')
   foreground = foreground_image.resize(DIMENSIONS_BIG_SPOODER, resample=0)
   background.paste(foreground, (-135, 450), foreground)
-  background.show()
   background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
 
@@ -255,24 +243,21 @@ def add_forehead_tatoo(forehead_tatoo):
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\bitcoin.png')
     foreground = foreground_image.resize(DIMENSIONS_FOREHEAD, resample=0)
     background.paste(foreground, (210, 150), foreground)
-    background.show()
 
   elif forehead_tatoo == 'doge':
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\dogecoin.png')
     foreground = foreground_image.resize(DIMENSIONS_FOREHEAD, resample=0)
     background.paste(foreground, (210, 150), foreground)
-    background.show()
 
   elif forehead_tatoo == 'marijuana':
     foreground_image = Image.open(IMAGE_PATH_ACCESSORIES + r'\marijuana.png')
     foreground = foreground_image.resize(DIMENSIONS_FOREHEAD, resample=0)
     background.paste(foreground, (210, 150), foreground)
-    background.show()
   
   background.save(IMAGE_PATH + '\musk_' + str(x) + '.png')
 
 
-nb_images = 3
+nb_images = 10
 
 DIMENSIONS = 600, 600
 SMALL_DIMENSIONS = 60,60
@@ -302,21 +287,21 @@ M3 = (201,147,147)
 T1 = (214,214,214)
 T2 = (227,227,227)
 
-SKIN_OPTIONS = {'random_color' : 85, 'human_elon' : 15}
+SKIN_OPTIONS = {'random_color': 85, 'human_elon': 15}
 NORMAL_HAIR = {'yes': 25, '': 75}
-GLASSES_TYPE_OPTIONS = {'' : 75, 'normal' : 10, 'spooderman' : 10, 'nerd' : 5}
-GLASSES_SIZE_OPTIONS = {'big_glasses' : 80, 'grandma_glasses' : 20}
-EYES_OPTIONS = {'' : 92, 'demon' : 5, 'lizard' : 3}
+GLASSES_TYPE_OPTIONS = {'': 75, 'normal': 10, 'spooderman': 10, 'nerd': 5}
+GLASSES_SIZE_OPTIONS = {'big_glasses' : 80, 'grandma_glasses': 20}
+EYES_OPTIONS = {'': 92, 'demon': 5, 'lizard': 3}
 JOINT = {'yes': 10, '': 90}
-FOREHEAD_OPTIONS = {'' : 80, 'marijuana' : 12, 'bitcoin' : 5, 'doge' : 3}
-BACKGROUND_OPTIONS = {'' : 50, 'marijuana' : 12, 'bitcoin' : 5, 'doge' : 3}
+FOREHEAD_OPTIONS = {'': 80, 'marijuana': 12, 'bitcoin': 5, 'doge': 3}
+BACKGROUND_OPTIONS = {'': 52, 'night': 6, 'city': 6, 'car': 6, 'cinema': 6, 'bomb': 6, 'space': 1, 'abduction': 3, 'moon': 2, 'futuristic': 6, 'trees': 6}
 
 
 
 
 #pick attributes
 
-seed(21)
+seed(42)
 
 list_skin_options = random.choices(list(SKIN_OPTIONS.keys()), weights = SKIN_OPTIONS.values(), k = nb_images) #**verify tha glasses_size is not included in map if glasses type is ''
 list_normal_hair = random.choices(list(NORMAL_HAIR.keys()), weights = NORMAL_HAIR.values(), k = nb_images)
@@ -325,6 +310,8 @@ list_glasses_size = random.choices(list(GLASSES_SIZE_OPTIONS.keys()), weights = 
 list_eyes_options = random.choices(list(EYES_OPTIONS.keys()), weights = EYES_OPTIONS.values(), k = nb_images)
 list_joint_option = random.choices(list(JOINT.keys()), weights = JOINT.values(), k = nb_images)
 list_forehead_options = random.choices(list(FOREHEAD_OPTIONS.keys()), weights = FOREHEAD_OPTIONS.values(), k = nb_images)
+list_background_options = random.choices(list(BACKGROUND_OPTIONS.keys()), weights = BACKGROUND_OPTIONS.values(), k = nb_images)
+
 
 attributes_map = []
 
@@ -337,7 +324,8 @@ for i in range(nb_images):
     'Glasses_size': list_glasses_size[i],
     'Eyes_Type': list_eyes_options[i],
     'Joint': list_joint_option[i],
-    'Forehead type': list_forehead_options[i]
+    'Forehead type': list_forehead_options[i],
+    'Background type' : list_background_options[i]
   }
   attributes_map.append(attributes_dict)
 
@@ -390,8 +378,8 @@ for x in range(nb_images):
     b1= gen_hair(list_normal_hair[x])
 
 
-  #Generate basic image with colors
-  make_image('test')
+  
+  make_image(list_background_options[x])
 
 
   if list_eyes_options[x] != '':
@@ -405,6 +393,9 @@ for x in range(nb_images):
    
   if list_joint_option[x] != '':
     add_joint()
+  
+  final_image = Image.open(IMAGE_PATH + '\musk_' + str(x) + '.png')
+  final_image.show()
 
   
 

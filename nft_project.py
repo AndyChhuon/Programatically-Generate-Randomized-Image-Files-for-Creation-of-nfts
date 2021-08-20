@@ -2,7 +2,7 @@ from random import seed
 from random import randint
 import numpy as np
 from PIL import Image
-import os
+import json
 import random
 
 
@@ -260,6 +260,7 @@ def add_forehead_tatoo(forehead_tatoo):
 
 
 nb_images = 10
+image_url = 'https://gateway.pinata.cloud/ipfs/QmaTF1e4YndTcKMyTb6RUsAjyQ8jPPrrWXzbMXDRDCTyjs/100_Musks_42/musk_'
 
 DIMENSIONS = 600, 600
 SMALL_DIMENSIONS = 60,60
@@ -270,9 +271,9 @@ DIMENSIONS_GMA_SPOODER = 275, 275
 DIMENSIONS_LIZARD = 36, 36 
 DIMENSIONS_DEMON = 47,47
 DIMENSIONS_FOREHEAD = 100, 100
-IMAGE_PATH = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Images"
+IMAGE_PATH = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\100_Musks_42"
 IMAGE_PATH_ACCESSORIES = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\Accessories"
-
+JSON_PATH = r"c:\Users\andyc\OneDrive\Desktop\Visual Studio Code\Nft_project\JSON"
 
 A1= (79,69,68)
 A2= (49,43,42)
@@ -335,6 +336,29 @@ for i in range(nb_images):
   attributes_map.append(attributes_dict)
 
 print(attributes_map)
+
+#Create TokenURI JSON file for each image file
+for index in range(nb_images):
+  data = {}
+  map_image = attributes_map[index]
+
+  data["name"] = "Picasso Musk #" + str(index)
+  data["description"] = "Picasso Musks are 10000 programatically generated clones of the man single-handedly carrying humanity. Similarly to the man himself, Picasso Musks were born far far away in a galaxy called The ETH Blockchain."
+  data["image"] = str(image_url) + str(index) + ".png"
+
+  data["attributes"] = []
+
+  for key in map_image.keys():
+    data["attributes"].append({
+                "trait_type": key,
+                "value": map_image[key]
+            })
+
+  with open(JSON_PATH + r'\json' + str(index), 'w') as f:
+            json.dump(data, f)
+
+
+
 
 
 #Make Image from Attributes
